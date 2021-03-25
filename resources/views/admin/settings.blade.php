@@ -31,15 +31,35 @@
                             <h3 class="card-title">Actualizar password</h3>
                         </div>
                         <!-- /.card-header -->
+                        @if(Session::has('error_message'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                            style="margin-top: 10px">
+                                {{ Session::get('error_message') }}
+
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        @if(Session::has('success_message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert"
+                                 style="margin-top: 10px">
+                                {{ Session::get('success_message') }}
+
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                    @endif
                         <!-- form start -->
-                        <form role="form" method="post" action="{{ url('/admin/update-pwd') }}"
+                        <form role="form" method="post" action="{{ url('/admin/update-current-pwd') }}"
                               name="updatePasswordForm" id="updatePasswordForm">@csrf
                             <div class="card-body">
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label for="exampleInputEmail1">Username</label>
                                     <input class="form-control" value="{{ $adminDetails->name }}"
                                     placeholder="Ingresa un nombre de usuario" id="admin_name" name="admin_name">
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input readonly class="form-control" value="{{ $adminDetails->email }}">
@@ -51,17 +71,18 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Actual Password</label>
                                     <input type="password" class="form-control" id="current_pwd" name="current_pwd"
-                                           placeholder="Ingrese Password actual">
+                                           placeholder="Ingrese Password actual" required>
                                     <span id="chkCurrentPassword"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Nueva Password</label>
                                     <input type="password" class="form-control" iid="new_pwd" name="new_pwd"
-                                           placeholder="Ingrese nuevo Password">
+                                           placeholder="Ingrese nuevo Password" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Confirmar Password</label>
-                                    <input type="password" class="form-control" id="confirm_pwd" name="confirm_pwd" placeholder="Confirmar Password">
+                                    <input type="password" class="form-control" id="confirm_pwd" name="confirm_pwd"
+                                           placeholder="Confirmar Password" required>
                                 </div>
 
                             </div>

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -69,6 +69,27 @@ class AdminController extends Controller
             echo "false";
         }
 
+    }
+    public function updateCurrentPassword(Request $request)
+    {
+       if ($request->isMethod('post')){
+           $data = $request->all();
+           //dd($data);
+           //echo "<pre>"; print_r($data); die;
+           //Chequea si el password actual es correcto
+           if(Hash::check($data['current_pwd'], Auth::guard('admin')->user()->password)){
+               //Chequea si new password y confirmar pass coinciden
+               if ($data['new_pwd'] == $data['confirm_pwd']){
+                   Admin::where('id', Auth::guard('admin')->user()->id)->update(['password'=>bcrypt($data['new_pwd'])]);
+                   Session::flash('success_message','La contraseña ha sido actualizada');
+               }else{
+                   Session::flash('error_message', 'Nueva contraseña y confirmación no coinciden');
+               }
+           }else{
+               Session::flash('error_message', 'Tu contraseña actual es incorrecta');
+           }
+           return redirect()->back();
+       }
     }
 }
 
