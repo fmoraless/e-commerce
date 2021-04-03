@@ -62,7 +62,8 @@
                         @endif
                         <!-- form start -->
                         <form role="form" method="post" action="{{ url('/admin/update-admin-details') }}"
-                              name="updateAdminDetails" id="updateAdminDetails">@csrf
+                              name="updateAdminDetails" id="updateAdminDetails" enctype="multipart/form-data">
+                            @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
@@ -80,11 +81,19 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Celular</label>
                                     <input type="text" class="form-control" id="admin_mobile" name="admin_mobile"
+                                           value="{{ Auth::guard('admin')->user()->mobile }}"
                                            placeholder="Ingrese Numero celular" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Imagen</label>
-                                    <input type="file" class="form-control" id="admin_image" name="admin_image">
+                                    <input type="file" class="form-control" id="admin_image" name="admin_image" accept="image/*">
+                                    @if(!empty(Auth::guard('admin')->user()->image))
+                                        <a target="_blank" href="{{ url('images/admin_img/admin_photos/'.Auth::guard('admin')->user()->image) }}">
+                                            Ver imagen
+                                        </a>
+                                        <input type="hidden" name="current_admin_image"
+                                               value="{{ Auth::guard('admin')->user()->image }}">
+                                    @endif
                                 </div>
 
                             </div>

@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-
+use Image;
+use function PHPUnit\Framework\isReadable;
 
 
 class AdminController extends Controller
@@ -97,23 +98,45 @@ class AdminController extends Controller
             $data = $request->all();
             //dd($data);
             $rules = [
-                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'admin_mobile' => 'required|numeric'
+                'admin_name'   => 'required|regex:/^[\pL\s\-]+$/u',
+                'admin_mobile' => 'required|numeric',
+                'admin_image'  => 'image',
             ];
             $customMessages = [
-                'admin_name.required' => 'Nombre de usuario es requerido.',
-                'admin_name.alpha' => 'Ingrese un nombre válido.',
+                'admin_name.required'   => 'Nombre de usuario es requerido.',
+                'admin_name.alpha'      => 'Ingrese un nombre válido.',
                 'admin_mobile.required' => 'Celular es requerido.',
-                'admin_mobile.numeric' => 'Ingrese un celular válido.',
+                'admin_mobile.numeric'  => 'Ingrese un celular válido.',
+                'admin_image.image'     => 'Ingrese un archivo de imágen válido.',
 
             ];
             $this->validate($request, $rules, $customMessages);
 
-            //update admin details
+            //upload image
+            if ($request->hasFile('admin_image')) {
+                $image_tmp = $request->file('admin_image');
+                if ($image_tmp->isValid()) {
+                    //Get extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    //generate new image
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'images/admin_img/admin_photos/'.$imageName;
+                    //Upload image
+                    Image::make($image_tmp)->save($imagePath);
+                }else if(!empty($data['current_admin_image'])){
+                    $imageName = $data['current_admin_image'];
+                }else{
+                    $imageName = "";
+                }
+            }
+            //dd($data);
+            //update admin details  - ** Error video 15 "Undefined variable: imageName"  /***
+
             Admin::where('email', Auth::guard('admin')->user()->email)
-                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
+                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'], 'image' => $imageName]);
             session::flash('success_message', 'Detalles de administrador actualizados satisfactoriamente');
             return redirect()->back();
+
         }
         return view('admin.update_admin_details');
     }
