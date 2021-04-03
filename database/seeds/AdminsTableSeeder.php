@@ -18,6 +18,7 @@ class AdminsTableSeeder extends Seeder
                 'name' => 'admin',
                 'type' => 'admin',
                 'email' => 'admin@admin.com',
+                'mobile' => '56982166481',
                 'password' => '$2y$10$pJRKQbAQ5ChYur.Q/dhZmuka.ObXm1G6sHB9J59c74P21fxTxEfDC',
                 'image' => '',
                 'status' => 1,
