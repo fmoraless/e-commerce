@@ -91,6 +91,32 @@ class AdminController extends Controller
            return redirect()->back();
        }
     }
+
+    public function updateAdminDetails(Request $request) {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            //dd($data);
+            $rules = [
+                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'admin_mobile' => 'required|numeric'
+            ];
+            $customMessages = [
+                'admin_name.required' => 'Nombre de usuario es requerido.',
+                'admin_name.alpha' => 'Ingrese un nombre válido.',
+                'admin_mobile.required' => 'Celular es requerido.',
+                'admin_mobile.numeric' => 'Ingrese un celular válido.',
+
+            ];
+            $this->validate($request, $rules, $customMessages);
+
+            //update admin details
+            Admin::where('email', Auth::guard('admin')->user()->email)
+                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
+            session::flash('success_message', 'Detalles de administrador actualizados satisfactoriamente');
+            return redirect()->back();
+        }
+        return view('admin.update_admin_details');
+    }
 }
 
 
