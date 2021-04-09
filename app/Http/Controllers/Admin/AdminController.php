@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Image;
+use Intervention\Image\Image;
 use function PHPUnit\Framework\isReadable;
 
 
@@ -16,6 +16,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
+        Session::put('page', 'dashboard');
         return view('admin.dashboard');
     }
 
@@ -52,6 +53,7 @@ class AdminController extends Controller
     }
     public function settings()
     {
+        Session::put('page', 'settings');
         //echo "<pre>"; print_r(Auth::guard('admin')->user()); die;
         //$admin = Auth::guard('admin')->user();
         //dd($admin);
@@ -94,6 +96,7 @@ class AdminController extends Controller
     }
 
     public function updateAdminDetails(Request $request) {
+        Session::put('page', 'update-admin-details');
         if ($request->isMethod('post')) {
             $data = $request->all();
             //dd($data);
