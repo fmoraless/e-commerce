@@ -73,6 +73,7 @@
 <script>
     $(function () {
         $("#sections").DataTable();
+        $("#categories").DataTable();
     });
 </script>
 
