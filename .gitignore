@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 public/images/admin_img/admin_photos/48831.jpg
 public/images/admin_img/admin_photos/53458.jpg
+*.png
+*.jpg

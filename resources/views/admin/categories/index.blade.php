@@ -24,10 +24,23 @@
         <section class="content">
             <div class="row">
                 <div class="col-12">
+                    @if(Session::has('success_message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"
+                             style="margin-top: 10px">
+                            {{ Session::get('success_message') }}
 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Categorías</h3>
+                            <a href="{{ url('admin/add-edit-category') }}" style="max-width: 150px; float:right
+                                ; display: inline-block;" class="btn btn-block btn-success">
+                                Nueva categoría
+                            </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -46,6 +59,7 @@
                                 <tr>
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->category_name }}</td>
+                                    <td>{{ $category->url }}</td>
                                     <td>
                                         @if ($category->status == 1)
                                             <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}"
