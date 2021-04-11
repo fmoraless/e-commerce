@@ -54,14 +54,8 @@
                                         <input type="text" class="form-control" id="category_name" name="category_name"
                                                placeholder="Nombre categoría">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Nivel Categoría</label>
-                                        <select id="parent_id" name="parent_id" class="form-control select2" style="width: 100%;">
-                                            <option value="0">Categoría principal</option>
-                                            {{--@foreach($sections as $section)
-                                                <option>{{ $section->name }}</option>
-                                            @endforeach--}}
-                                        </select>
+                                    <div id="appendCategoriesLevel">
+                                        @include('admin.categories.append_categories_level')
                                     </div>
                                 </div>
                                 <!-- /.col -->
