@@ -78,7 +78,9 @@
                                                href="javascript:void(0)">Inactive</a>
                                         @endif
                                     </td>
-                                    <td> act</td>
+                                    <td>
+                                        <a href="{{ url('admin/add-edit-category/'.$category->id) }}">Edit</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
