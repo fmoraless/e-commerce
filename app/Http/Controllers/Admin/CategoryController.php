@@ -47,6 +47,8 @@ class CategoryController extends Controller
             //Edit Category functionallity
             $categorydata = Category::where('id', $id)->first();
             $categorydata = json_decode(json_encode($categorydata),true);
+
+            /*Comprobar que vienen todos los datos en el edit*/
             //dd($categorydata);
 
             $categories = Category::with('subcategories')->where([
@@ -157,5 +159,26 @@ class CategoryController extends Controller
             //dd($categories);
             return view('admin.categories.append_categories_level', compact('categories'));
         }
+    }
+
+    public function deleteCategoryImage($id)
+    {
+        //Get category image
+        //dd($id);
+        $categoryImage = Category::select("category_image")->where('id', $id)->first();
+
+        // get category image path
+        $category_image_path = 'images/category_images/';
+
+        //delete category image drm category_images folder if exits.
+        if (file_exists($category_image_path.$categoryImage->category_image)){
+            unlink($category_image_path.$categoryImage->category_image);
+        }
+
+        //delete image from categories table
+        Category::where('id',$id)->update(['category_image' => '']);
+
+        session::flash('success_message', "Imagen de categoría eliminada correctamente.");
+        return redirect()->back();
     }
 }
