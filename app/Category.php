@@ -25,7 +25,7 @@ class Category extends Model
     }
 
     public function section(){
-        return $this->belongsTo(Section::class)->select('id', 'name');
+        return $this->belongsTo(Section::class, 'section_id')->select('id', 'name');
     }
 
     public function parentcategory(){
