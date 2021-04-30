@@ -181,4 +181,11 @@ class CategoryController extends Controller
         session::flash('success_message', "Imagen de categoría eliminada correctamente.");
         return redirect()->back();
     }
+
+    public function deleteCategory($id)
+    {
+        Category::where('id',$id)->delete();
+        session::flash('success_message', "Categoría eliminada correctamente.");
+        return redirect()->back();
+    }
 }
