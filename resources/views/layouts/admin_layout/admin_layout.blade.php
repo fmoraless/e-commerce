@@ -112,5 +112,7 @@
 <script src="{{ asset('js/admin_js/demo.js') }}"></script>
 <!-- Custom Admin JS -->
 <script src="{{ asset('js/admin_js/admin_script.js') }}"></script>
+<!-- Sweet Alert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>
