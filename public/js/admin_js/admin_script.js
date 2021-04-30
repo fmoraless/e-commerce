@@ -85,4 +85,33 @@ $(document).ready(function (){
             }
         });
     });
+
+
+    // Confirm delete o Record
+    /*$(".confirmDelete").click(function() {
+       var name = $(this).attr("name");
+       if (confirm("¿Está seguro de eliminar esta categoria"+name+"?")){
+           return true;
+       }
+       return false;
+    });*/
+
+    $(".confirmDelete").click(function() {
+        var record = $(this).attr("record");
+        var recordid = $(this).attr("recordid");
+
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "Seguro que desea eliminar esta categoría",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                window.location.href="/admin/delete-"+record+"/"+recordid;
+            }
+        })
+    });
 });
